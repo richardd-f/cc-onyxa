@@ -60,7 +60,7 @@ COPY --from=builder /app/.next/static ./.next/static
 
 # Prisma schema and config (for migration and seeder)
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/prisma.config.ts ./
+COPY --from=builder /app/prisma7.config.ts ./
 
 # Install CLI tools (prisma, tsx, dotenv) in an isolated /tools directory
 WORKDIR /tools
