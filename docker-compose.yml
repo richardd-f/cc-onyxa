@@ -1,0 +1,41 @@
+services:
+  migration:
+    image: ghcr.io/richardd-f/CP-Onyxa:latest
+    container_name: onyxa-migration
+    env_file:
+      - .env
+    command: prisma migrate deploy
+    networks:
+      - npm_default
+
+  seed:
+    image: ghcr.io/richardd-f/CP-Onyxa:latest
+    container_name: onyxa-seed
+    env_file:
+      - .env
+    command: prisma db seed
+    depends_on:
+      - migration
+    networks:
+      - npm_default
+
+  web:
+    image: ghcr.io/richardd-f/CP-Onyxa:latest
+    container_name: onyxa
+    expose:
+      - 3000
+    env_file:
+      - .env
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.90'
+    depends_on:
+      - seed
+    networks:
+      - npm_default
+
+networks:
+  npm_default:
+    external: true

@@ -3,25 +3,41 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.5.9"
+    "@auth/prisma-adapter": "^2.11.1",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "@yudiel/react-qr-scanner": "^2.5.1",
+    "cloudinary": "^2.9.0",
+    "dotenv": "^17.2.3",
+    "eslint-config-next": "^15.5.9",
+    "midtrans-client": "^1.4.3",
+    "next": "^15.5.9",
+    "next-auth": "5.0.0-beta.30",
+    "next-cloudinary": "^6.17.5",
+    "pg": "^8.17.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-qr-code": "^2.0.18",
+    "react-toastify": "^11.0.5",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@tailwindcss/postcss": "^4",
+    "@types/midtrans-client": "^1.4.0",
     "@types/node": "^20",
+    "@types/pg": "^8.16.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
+    "prisma": "^7.2.0",
     "tailwindcss": "^4",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.9",
-    "@eslint/eslintrc": "^3"
+    "typescript": "^5"
   }
 }
