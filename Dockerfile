@@ -27,7 +27,8 @@ RUN pnpm prisma generate
 RUN pnpm build
 RUN ls -la .next && ls -la .next/standalone
 
-RUN cp -r /app/node_modules/.prisma /app/.next/standalone/node_modules/
+RUN mkdir -p /app/.next/standalone/node_modules && \
+    cp -r $(find /app/node_modules -type d -name ".prisma" | head -n 1) /app/.next/standalone/node_modules/
 
 # -------- Stage 2: Runtime --------
 FROM node:22-slim AS runner
