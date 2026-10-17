@@ -25,7 +25,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm prisma generate
 RUN pnpm build
-RUN ls -la .next && ls -la .next/standalone
+RUN ls -la .next/standalone; \
+    ls -la .next/standalone/node_modules 2>&1 | head -30; \
+    ls .next/standalone/node_modules/.pnpm 2>&1 | grep -iE 'prisma|^pg' || echo "NO PRISMA/PG TRACED"
 
 RUN node -e "for (const m of ['@prisma/client','@prisma/adapter-pg','pg']) { try { console.log('OK  ', m, require.resolve(m)) } catch (e) { console.log('FAIL', m, e.code, e.message.split('\n')[0]) } }"; \
     ls -la node_modules node_modules/@prisma 2>&1 | head -40; \
