@@ -1,6 +1,6 @@
 services:
   migration:
-    image: ghcr.io/richardd-f/CP-Onyxa:latest
+    image: ghcr.io/richardd-f/cp-onyxa:latest
     container_name: onyxa-migration
     env_file:
       - .env
@@ -9,7 +9,7 @@ services:
       - npm_default
 
   seed:
-    image: ghcr.io/richardd-f/CP-Onyxa:latest
+    image: ghcr.io/richardd-f/cp-onyxa:latest
     container_name: onyxa-seed
     env_file:
       - .env
@@ -20,7 +20,7 @@ services:
       - npm_default
 
   web:
-    image: ghcr.io/richardd-f/CP-Onyxa:latest
+    image: ghcr.io/richardd-f/cp-onyxa:latest
     container_name: onyxa
     expose:
       - 3000
