@@ -27,15 +27,10 @@ RUN pnpm prisma generate
 RUN pnpm build
 RUN ls -la .next && ls -la .next/standalone
 
-RUN set -ex; \
-    mkdir -p /app/.next/standalone/node_modules; \
-    PRISMA_DIR=$(find /app/node_modules -name ".prisma" | head -n 1); \
-    if [ -z "$PRISMA_DIR" ]; then \
-    echo "ERROR: .prisma directory not found! 'pnpm prisma generate' failed or output somewhere else."; \
-    exit 1; \
-    fi; \
-    echo "SUCCESS: Found Prisma at: $PRISMA_DIR"; \
-    cp -rL "$PRISMA_DIR" /app/.next/standalone/node_modules/
+RUN set -eux; \
+    for d in /app/.next/standalone/node_modules/.pnpm/@prisma+client@*/node_modules; do \
+    [ -d "$d/.prisma" ] || cp -rL /app/node_modules/.pnpm/@prisma+client@*/node_modules/.prisma "$d/"; \
+    done
 
 # -------- Stage 2: Runtime --------
 FROM node:22-slim AS runner
