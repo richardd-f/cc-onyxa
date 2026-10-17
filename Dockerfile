@@ -3,7 +3,7 @@ FROM node:22-slim AS builder
 RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm-v2,target=/pnpm/store \
     pnpm config set store-dir /pnpm/store && \
     pnpm i --frozen-lockfile
