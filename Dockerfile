@@ -27,11 +27,21 @@ RUN pnpm prisma generate
 RUN pnpm build
 
 RUN set -eux; \
+    SRC=/app/node_modules/.pnpm; \
+    DST=/app/.next/standalone/node_modules/.pnpm; \
+    cd "$SRC"; \
+    for d in @prisma+client@* @prisma+client-runtime-utils@* @prisma+adapter-pg@* \
+    @prisma+driver-adapter-utils@* @prisma+debug@* \
+    pg@* pg-* pgpass@* postgres-* split2@* xtend@*; do \
+    rm -rf "$DST/$d"; \
+    cp -a "$SRC/$d" "$DST/$d"; \
+    done; \
     cd /app/.next/standalone/node_modules; \
     mkdir -p @prisma; \
     cp -a /app/node_modules/@prisma/. ./@prisma/; \
     cp -a /app/node_modules/pg ./pg; \
-    ls -la @prisma pg
+    ls -la @prisma pg; \
+    ls .pnpm | grep -iE 'prisma|^pg|postgres|split2|xtend'
 
 RUN ls -la .next/standalone; \
     ls -la .next/standalone/node_modules 2>&1 | head -30; \
