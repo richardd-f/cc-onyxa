@@ -10,6 +10,7 @@ UI Rules
 Logic Rules
 1. remove unused import
 2. make sure there is no linting or typescript error
+3. do not use 'any' data type
 
 
 Website Description

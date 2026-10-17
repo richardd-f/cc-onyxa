@@ -4,7 +4,17 @@ import { InsightsView } from "@/features/insights/components/insights-view";
 
 export default async function InsightsPage() {
   const user = await requireAuth();
-  const insights = await getOrGenerateInsights(user.id, false);
+  const rawInsights = await getOrGenerateInsights(user.id, false);
 
-  return <InsightsView initialInsights={insights as any} />;
+  const insights = rawInsights.map((insight) => ({
+    ...insight,
+    evidence:
+      insight.evidence !== null &&
+      typeof insight.evidence === "object" &&
+      !Array.isArray(insight.evidence)
+        ? (insight.evidence as Record<string, unknown>)
+        : null,
+  }));
+
+  return <InsightsView initialInsights={insights} />;
 }
