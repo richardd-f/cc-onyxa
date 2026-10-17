@@ -1,102 +1,123 @@
-import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth/session";
+import {
+  Wallet2,
+  Sparkles,
+  Receipt,
+  ArrowRight,
+  BarChart3,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-export default function Home() {
+export default async function HomePage() {
+  const user = await getCurrentUser();
+  if (user) {
+    redirect("/dashboard");
+  }
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            P Halo apa kabarrrrrrrrrr
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+      {/* Navigation Bar */}
+      <header className="sticky top-0 z-30 flex items-center justify-between px-6 py-4 border-b border-slate-200/80 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl">
+        <div className="flex items-center gap-2.5">
+          <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-md shadow-emerald-500/20">
+            <Wallet2 className="h-5 w-5" />
+          </div>
+          <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            SpendWise <span className="text-emerald-600">AI</span>
+          </span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+        <div className="flex items-center gap-3">
+          <Link href="/login">
+            <Button variant="ghost" size="sm">
+              Sign In
+            </Button>
+          </Link>
+          <Link href="/register">
+            <Button variant="emerald" size="sm">
+              Get Started
+            </Button>
+          </Link>
+        </div>
+      </header>
+
+      {/* Hero Section - Pure Flexbox */}
+      <section className="flex flex-col items-center justify-center text-center px-6 pt-16 pb-12 max-w-4xl mx-auto flex-1">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200/80 dark:border-emerald-800/80 text-emerald-700 dark:text-emerald-300 text-xs font-semibold mb-6">
+          <Sparkles className="h-3.5 w-3.5" />
+          <span>Receipt Scanning + Google Gemini AI Intelligence</span>
+        </div>
+
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 leading-[1.15]">
+          Effortless Expense Tracking,{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">
+            Powered by Receipt AI
+          </span>
+        </h1>
+
+        <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mt-5 mb-8 font-normal leading-relaxed">
+          Snap paper receipts or drop invoices. SpendWise extracts line items via OCR, structures expenses with Gemini AI, reveals spending habits, and generates verifiable financial insights.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center gap-3.5 w-full sm:w-auto">
+          <Link href="/login" className="w-full sm:w-auto">
+            <Button variant="emerald" size="lg" className="w-full sm:w-auto shadow-md shadow-emerald-500/25">
+              <span>Launch Demo Dashboard</span>
+              <ArrowRight className="h-4 w-4 ml-1.5" />
+            </Button>
+          </Link>
+          <Link href="/register" className="w-full sm:w-auto">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto">
+              Create Free Account
+            </Button>
+          </Link>
+        </div>
+
+        {/* Feature Highlights Grid replaced with Flexbox */}
+        <div className="flex flex-col sm:flex-row flex-wrap gap-4 mt-16 text-left w-full">
+          <div className="flex-1 min-w-[260px] p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col gap-2.5">
+            <div className="h-10 w-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 flex items-center justify-center">
+              <Receipt className="h-5 w-5" />
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+              AI Receipt Scanner
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Hybrid OCR engine (OCR.Space + Tesseract) extracts raw text, while Gemini structures items, taxes, and amounts.
+            </p>
+          </div>
+
+          <div className="flex-1 min-w-[260px] p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col gap-2.5">
+            <div className="h-10 w-10 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 flex items-center justify-center">
+              <BarChart3 className="h-5 w-5" />
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+              Spending Trend Comparisons
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Deterministic calculations compare this week vs last week and this month vs last month without hallucinated metrics.
+            </p>
+          </div>
+
+          <div className="flex-1 min-w-[260px] p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col gap-2.5">
+            <div className="h-10 w-10 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-600 flex items-center justify-center">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+              Verified AI Insights
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Actionable recommendations grounded in verified backend analytics with zero-baseline edge case safety.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-200/80 dark:border-slate-800 py-6 text-center text-xs text-slate-400">
+        SpendWise AI &bull; Production Personal Finance Application with Next.js App Router
       </footer>
     </div>
   );
