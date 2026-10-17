@@ -27,6 +27,10 @@ RUN pnpm prisma generate
 RUN pnpm build
 RUN ls -la .next && ls -la .next/standalone
 
+RUN node -e "for (const m of ['@prisma/client','@prisma/adapter-pg','pg']) { try { console.log('OK  ', m, require.resolve(m)) } catch (e) { console.log('FAIL', m, e.code, e.message.split('\n')[0]) } }"; \
+    ls -la node_modules node_modules/@prisma 2>&1 | head -40; \
+    ls node_modules/.pnpm | grep -iE 'prisma|^pg' ; true
+
 RUN set -eux; \
     for d in /app/.next/standalone/node_modules/.pnpm/@prisma+client@*/node_modules; do \
     [ -d "$d/.prisma" ] || cp -rL /app/node_modules/.pnpm/@prisma+client@*/node_modules/.prisma "$d/"; \
@@ -64,8 +68,10 @@ RUN --mount=type=cache,id=pnpm-tools,target=/pnpm/store \
     pnpm add prisma@7.2.0 tsx dotenv
 
 WORKDIR /app
-
-RUN node -e "require('@prisma/client'); require('@prisma/adapter-pg'); require('pg'); console.log('Runtime deps resolved OK');"
+RUN node -e "for (const m of ['@prisma/client','@prisma/adapter-pg','pg']) { try { console.log('OK  ', m, require.resolve(m)) } catch (e) { console.log('FAIL', m, e.code, e.message.split('\n')[0]) } }"; \
+    ls -la node_modules node_modules/@prisma 2>&1 | head -40; \
+    ls node_modules/.pnpm | grep -iE 'prisma|^pg'; \
+    node -e "require('@prisma/client'); require('@prisma/adapter-pg'); require('pg'); console.log('Runtime deps resolved OK');"
 
 EXPOSE 3000
 
