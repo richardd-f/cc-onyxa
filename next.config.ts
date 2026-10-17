@@ -11,6 +11,15 @@ const nextConfig: NextConfig = {
     "prisma",
     "@prisma/adapter-pg", // Include this since you use the pool adapter
   ],
+  outputFileTracingIncludes: {
+    "/*": [
+      "./node_modules/.pnpm/@prisma+client@*/**/*",
+      "./node_modules/.pnpm/@prisma+adapter-pg@*/**/*",
+      "./node_modules/.pnpm/@prisma+driver-adapter-utils@*/**/*",
+      "./node_modules/.pnpm/@prisma+client-runtime-utils@*/**/*",
+      "./node_modules/.pnpm/pg*/**/*",
+    ],
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'res.cloudinary.com', },
