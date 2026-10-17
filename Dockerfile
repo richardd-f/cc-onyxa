@@ -25,6 +25,14 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm prisma generate
 RUN pnpm build
+
+RUN set -eux; \
+    cd /app/.next/standalone/node_modules; \
+    mkdir -p @prisma; \
+    cp -a /app/node_modules/@prisma/. ./@prisma/; \
+    cp -a /app/node_modules/pg ./pg; \
+    ls -la @prisma pg
+
 RUN ls -la .next/standalone; \
     ls -la .next/standalone/node_modules 2>&1 | head -30; \
     ls .next/standalone/node_modules/.pnpm 2>&1 | grep -iE 'prisma|^pg' || echo "NO PRISMA/PG TRACED"
