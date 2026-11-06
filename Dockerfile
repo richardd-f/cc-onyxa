@@ -6,18 +6,9 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm-v2,target=/pnpm/store \
     pnpm config set store-dir /pnpm/store && \
-    pnpm i --frozen-lockfile
+    pnpm i --frozen-lockfile --ignore-scripts
 
 COPY . .
-
-ARG CLOUDINARY_CLOUD_NAME
-ARG CLOUDINARY_UPLOAD_PRESET
-ARG CLOUDINARY_API_KEY
-
-ENV NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$CLOUDINARY_CLOUD_NAME
-ENV NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=$CLOUDINARY_UPLOAD_PRESET
-ENV NEXT_PUBLIC_CLOUDINARY_API_KEY=$CLOUDINARY_API_KEY
-
 
 # Environment variables for build
 ENV DATABASE_URL="postgresql://user:pass@localhost:5432/dummydb"
@@ -63,7 +54,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PNPM_HOME="/pnpm"
-# /tools/node_modules/.bin is prepended so prisma/tsx/dotenv binaries take
+# /tools/node_modules/.bin is prepended so prisma/dotenv binaries take
 # precedence and are found without pnpm ever touching /app/node_modules.
 ENV PATH="$PNPM_HOME:/tools/node_modules/.bin:/app/node_modules/.bin:$PATH"
 ENV NODE_PATH=/tools/node_modules
@@ -73,19 +64,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-cert
     && rm -rf /var/lib/apt/lists/*
 
 # Copy only what standalone needs
-COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# Prisma schema and config (for migration and seeder)
+# Prisma schema and config for migrations
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma7.config.ts ./
 
-# Install CLI tools (prisma, tsx, dotenv) in an isolated /tools directory
+# Install migration tools in an isolated /tools directory
 WORKDIR /tools
 RUN --mount=type=cache,id=pnpm-tools,target=/pnpm/store \
     pnpm config set store-dir /pnpm/store && \
-    pnpm add prisma@7.2.0 tsx dotenv
+    pnpm add prisma@7.2.0 dotenv
 
 WORKDIR /app
 RUN node -e "for (const m of ['@prisma/client','@prisma/adapter-pg','pg']) { try { console.log('OK  ', m, require.resolve(m)) } catch (e) { console.log('FAIL', m, e.code, e.message.split('\n')[0]) } }"; \

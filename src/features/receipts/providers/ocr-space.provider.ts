@@ -1,5 +1,11 @@
 import { OCRInput, OCRProvider, OCRResult } from "../types";
 
+interface OCRSpaceResponse {
+  IsErroredOnProcessing?: boolean;
+  ErrorMessage?: string | string[];
+  ParsedResults?: Array<{ ParsedText?: string }>;
+}
+
 export class OCRSpaceProvider implements OCRProvider {
   private apiKey: string;
   private endpoint = "https://api.ocr.space/parse/image";
@@ -31,7 +37,7 @@ export class OCRSpaceProvider implements OCRProvider {
       throw new Error(`OCR.Space API error: ${response.status} ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const data: OCRSpaceResponse = await response.json();
 
     if (data.IsErroredOnProcessing) {
       const msg = Array.isArray(data.ErrorMessage) ? data.ErrorMessage.join(", ") : data.ErrorMessage || "OCR Processing failed";
@@ -39,7 +45,7 @@ export class OCRSpaceProvider implements OCRProvider {
     }
 
     const parsedResults = data.ParsedResults || [];
-    const extractedText = parsedResults.map((r: any) => r.ParsedText || "").join("\n").trim();
+    const extractedText = parsedResults.map((r) => r.ParsedText || "").join("\n").trim();
 
     return {
       text: extractedText,

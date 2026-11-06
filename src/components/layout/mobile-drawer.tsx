@@ -2,21 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { X, Wallet2, PlusCircle, LogOut } from "lucide-react";
+import { X, Wallet2, LogOut } from "lucide-react";
 import { NAV_ITEMS } from "./navigation";
 import { cn } from "@/lib/utils";
 
 interface MobileDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  onOpenScanModal?: () => void;
   user?: {
     name?: string | null;
     email: string;
   } | null;
 }
 
-export function MobileDrawer({ isOpen, onClose, onOpenScanModal, user }: MobileDrawerProps) {
+export function MobileDrawer({ isOpen, onClose, user }: MobileDrawerProps) {
   const pathname = usePathname();
 
   if (!isOpen) return null;
@@ -37,7 +36,7 @@ export function MobileDrawer({ isOpen, onClose, onOpenScanModal, user }: MobileD
               <Wallet2 className="h-4 w-4" />
             </div>
             <span className="font-bold text-slate-900 dark:text-slate-100 text-base">
-              SpendWise <span className="text-emerald-600">AI</span>
+              Onyxa
             </span>
           </div>
           <button
@@ -46,19 +45,6 @@ export function MobileDrawer({ isOpen, onClose, onOpenScanModal, user }: MobileD
             className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
           >
             <X className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="py-4">
-          <button
-            onClick={() => {
-              onClose();
-              if (onOpenScanModal) onOpenScanModal();
-            }}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-medium shadow-sm shadow-emerald-500/20"
-          >
-            <PlusCircle className="h-4 w-4" />
-            <span>Scan New Receipt</span>
           </button>
         </div>
 
@@ -82,11 +68,6 @@ export function MobileDrawer({ isOpen, onClose, onOpenScanModal, user }: MobileD
                   <Icon className="h-4 w-4" />
                   <span>{item.label}</span>
                 </div>
-                {item.badge && (
-                  <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-                    {item.badge}
-                  </span>
-                )}
               </Link>
             );
           })}
@@ -95,10 +76,10 @@ export function MobileDrawer({ isOpen, onClose, onOpenScanModal, user }: MobileD
         <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div className="flex flex-col min-w-0">
             <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">
-              {user?.name || "Alex Morgan"}
+              {user?.name || "Your account"}
             </span>
             <span className="text-[11px] text-slate-400 truncate">
-              {user?.email || "demo@spendwise.ai"}
+              {user?.email}
             </span>
           </div>
           <form action="/api/auth/logout" method="POST">

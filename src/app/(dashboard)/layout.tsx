@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth/session";
-import { getUserCategories } from "@/features/categories/services/category.service";
 import { AppShell } from "@/components/layout/app-shell";
 
 export default async function DashboardLayout({
@@ -14,14 +13,7 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
-  const categories = await getUserCategories(user.id);
-
   return (
-    <AppShell
-      user={user}
-      categories={categories.map((c) => ({ id: c.id, name: c.name, color: c.color }))}
-    >
-      {children}
-    </AppShell>
+    <AppShell user={user}>{children}</AppShell>
   );
 }

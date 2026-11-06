@@ -13,7 +13,7 @@ export async function GET() {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        "Content-Disposition": `attachment; filename="spendwise-export-${user.id}-${Date.now()}.json"`,
+        "Content-Disposition": `attachment; filename="onyxa-export-${user.id}-${Date.now()}.json"`,
       },
     });
   } catch {

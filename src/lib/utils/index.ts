@@ -36,7 +36,6 @@ export function formatDate(date: Date | string | number | null | undefined): str
     year: "numeric",
   }).format(d);
 }
-
 export function formatDateTime(date: Date | string | number | null | undefined): string {
   if (!date) return "-";
   const d = new Date(date);
@@ -48,42 +47,4 @@ export function formatDateTime(date: Date | string | number | null | undefined):
     hour: "numeric",
     minute: "numeric",
   }).format(d);
-}
-
-export interface PeriodComparisonResult {
-  current: number;
-  previous: number;
-  absoluteDiff: number;
-  percentageChange: number | null;
-  isIncrease: boolean;
-  hasPreviousData: boolean;
-}
-
-export function calculatePeriodComparison(
-  current: number,
-  previous: number
-): PeriodComparisonResult {
-  const absoluteDiff = current - previous;
-  const isIncrease = absoluteDiff > 0;
-
-  if (previous === 0) {
-    return {
-      current,
-      previous,
-      absoluteDiff,
-      percentageChange: current > 0 ? 100 : 0,
-      isIncrease,
-      hasPreviousData: false,
-    };
-  }
-
-  const percentageChange = Number(((absoluteDiff / previous) * 100).toFixed(1));
-  return {
-    current,
-    previous,
-    absoluteDiff,
-    percentageChange,
-    isIncrease,
-    hasPreviousData: true,
-  };
 }

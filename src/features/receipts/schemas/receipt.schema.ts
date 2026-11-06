@@ -30,29 +30,4 @@ export const parsedReceiptSchema = z.object({
     .default({ merchant: 0.8, amount: 0.8, date: 0.8, overall: 0.8 }),
 });
 
-export const confirmReceiptSchema = z.object({
-  receiptId: z.string().min(1, "Receipt ID is required"),
-  merchantName: z.string().min(1, "Merchant name is required"),
-  date: z.string().min(1, "Date is required"),
-  amount: z.number().positive("Amount must be greater than 0"),
-  currency: z.string().default("USD"),
-  categoryId: z.string().optional().nullable(),
-  paymentMethod: z
-    .enum(["CASH", "CREDIT_CARD", "DEBIT_CARD", "BANK_TRANSFER", "E_WALLET", "OTHER", "UNKNOWN"])
-    .default("UNKNOWN"),
-  notes: z.string().optional().nullable(),
-  items: z
-    .array(
-      z.object({
-        name: z.string().min(1),
-        quantity: z.number().optional().nullable(),
-        unitPrice: z.number().optional().nullable(),
-        totalPrice: z.number().optional().nullable(),
-      })
-    )
-    .optional()
-    .default([]),
-});
-
 export type ParsedReceiptSchemaType = z.infer<typeof parsedReceiptSchema>;
-export type ConfirmReceiptSchemaType = z.infer<typeof confirmReceiptSchema>;

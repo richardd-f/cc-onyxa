@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { User, Globe, Download, Trash2, CheckCircle2, AlertTriangle, Shield } from "lucide-react";
+import { Download, Trash2, CheckCircle2, AlertTriangle } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
@@ -24,7 +24,7 @@ export function SettingsView({ user }: SettingsViewProps) {
   const router = useRouter();
   const [name, setName] = React.useState(user.name || "");
   const [currency, setCurrency] = React.useState(user.currency || "USD");
-  const [locale, setLocale] = React.useState(user.locale || "en-US");
+  const locale = user.locale || "en-US";
   const [timezone, setTimezone] = React.useState(user.timezone || "America/New_York");
   const [isSaving, setIsSaving] = React.useState(false);
   const [feedbackMsg, setFeedbackMsg] = React.useState<string | null>(null);
@@ -49,7 +49,7 @@ export function SettingsView({ user }: SettingsViewProps) {
 
       setFeedbackMsg("Profile and preferences saved successfully!");
       router.refresh();
-    } catch (err) {
+    } catch {
       alert("Error saving preferences");
     } finally {
       setIsSaving(false);
@@ -213,7 +213,7 @@ export function SettingsView({ user }: SettingsViewProps) {
       <Modal
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}
-        title="Delete SpendWise Account?"
+        title="Delete Onyxa Account?"
         description="This action is irreversible. All your transactions, receipts, and insights will be permanently deleted."
         maxWidth="sm"
       >

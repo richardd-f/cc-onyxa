@@ -15,10 +15,10 @@ export default function AuthLayout({
         </div>
         <div className="flex flex-col">
           <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-            SpendWise <span className="text-emerald-600">AI</span>
+            Onyxa
           </span>
           <span className="text-[10px] text-slate-400 font-medium tracking-wider uppercase">
-            Intelligent Expense & Receipt Tracker
+            MSME Business Workspace
           </span>
         </div>
       </Link>
@@ -26,7 +26,7 @@ export default function AuthLayout({
       <div className="w-full max-w-md flex flex-col">{children}</div>
 
       <footer className="mt-8 text-center text-xs text-slate-400">
-        &copy; {new Date().getFullYear()} SpendWise AI. Secure & Private Financial Tracking.
+        &copy; {new Date().getFullYear()} Onyxa.
       </footer>
     </div>
   );

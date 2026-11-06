@@ -59,7 +59,7 @@ export default function RegisterPage() {
       <CardHeader className="text-center pb-2">
         <CardTitle className="text-xl">Create Account</CardTitle>
         <CardDescription>
-          Start tracking expenses with AI receipt intelligence
+          Create your Onyxa business account
         </CardDescription>
       </CardHeader>
 

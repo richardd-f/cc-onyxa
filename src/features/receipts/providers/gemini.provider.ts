@@ -66,7 +66,7 @@ Do not invent missing numbers. If a field cannot be determined, use null.`;
       const validation = parsedReceiptSchema.safeParse(parsedJson);
 
       if (validation.success) {
-        return validation.data as ParsedReceipt;
+        return validation.data;
       }
 
       console.warn("Gemini receipt response validation warning:", validation.error);

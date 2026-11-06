@@ -1,23 +1,21 @@
-import { requireAuth } from "@/lib/auth/session";
-import { getDashboardOverview, PeriodType } from "@/features/dashboard/services/dashboard.service";
-import { DashboardView } from "@/features/dashboard/components/dashboard-view";
+import Link from "next/link";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default async function DashboardPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ period?: string; start?: string; end?: string }>;
-}) {
-  const user = await requireAuth();
-  const params = await searchParams;
-  const period = (params.period as PeriodType) || "this_month";
-
-  const overviewData = await getDashboardOverview(user.id, period, params.start, params.end);
-
+export default function DashboardPage() {
   return (
-    <DashboardView
-      initialData={overviewData}
-      currency={user.currency || "USD"}
-      currentPeriod={period}
-    />
+    <Card className="max-w-2xl">
+      <CardHeader>
+        <CardTitle>Business workspace</CardTitle>
+        <CardDescription>Onyxa is being prepared for MSME business tracking.</CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-4">
+        <p className="text-sm text-slate-600 dark:text-slate-300">
+          Business tracking features are not available yet. You can manage your account and preferences in settings.
+        </p>
+        <Link href="/settings" className="self-start text-sm font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
+          Open settings
+        </Link>
+      </CardContent>
+    </Card>
   );
 }

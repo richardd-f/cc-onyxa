@@ -1,3 +1,25 @@
+# Current project direction
+
+Onyxa is pivoting to an MSME business tracker. This direction supersedes the historical
+personal-finance specification below. Do not implement the old finance product or restore
+removed routes just because that specification mentions them.
+
+Planned features, to be implemented only when requested:
+- Smart supplier invoice scanning: OCR.Space extracts text, then Gemini processes the text.
+- Dead stock and slow moving detection, using deterministic moving-average calculations.
+- Supplier price fluctuation comparisons against previous purchases.
+- Categorization into operational cost, HPP/COGS, or Capex.
+
+The current phase is repository cleanup only. Keep authentication, account settings,
+shared UI, Prisma infrastructure, and reusable provider adapters. Do not add MSME features,
+empty route files, or speculative abstractions. Preserve the current schema, migrations,
+and existing records until a separate data migration is designed and approved.
+
+Use the feature-based architecture and engineering rules below. See README.md for the
+current supported routes and setup, and docs/pivot-cleanup.md for the cleanup decisions.
+
+---
+
 Chore Rules
 1. use pnpm over npm
 
@@ -12,6 +34,11 @@ Logic Rules
 2. make sure there is no linting or typescript error
 3. do not use 'any' data type
 
+
+# Historical personal-finance specification (reference only)
+
+This describes the previous product and existing legacy data. Its feature checklist is
+not the current implementation scope.
 
 Website Description
 # Build an AI-Powered Receipt Finance Tracker with Next.js

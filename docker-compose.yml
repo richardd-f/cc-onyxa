@@ -8,17 +8,6 @@ services:
     networks:
       - npm_default
 
-  seed:
-    image: ghcr.io/richardd-f/cc-onyxa:latest
-    container_name: onyxa-seed
-    env_file:
-      - .env
-    command: prisma db seed
-    depends_on:
-      - migration
-    networks:
-      - npm_default
-
   web:
     image: ghcr.io/richardd-f/cc-onyxa:latest
     container_name: onyxa
@@ -32,7 +21,8 @@ services:
         limits:
           cpus: '0.90'
     depends_on:
-      - seed
+      migration:
+        condition: service_completed_successfully
     networks:
       - npm_default
 

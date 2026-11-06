@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { SignJWT, jwtVerify } from "jose";
 import { prisma } from "../db/prisma";
 
@@ -52,8 +53,8 @@ export async function clearSessionCookie() {
 }
 
 export async function getCurrentUser() {
+  const cookieStore = await cookies();
   try {
-    const cookieStore = await cookies();
     const token = cookieStore.get(COOKIE_NAME)?.value;
     if (!token) return null;
 
@@ -84,7 +85,7 @@ export async function getCurrentUser() {
 export async function requireAuth() {
   const user = await getCurrentUser();
   if (!user) {
-    throw new Error("UNAUTHORIZED");
+    redirect("/login");
   }
   return user;
 }

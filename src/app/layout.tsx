@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SpendWise AI — AI-Powered Receipt Finance Tracker",
-  description: "Track personal expenses by scanning receipts with hybrid OCR and Google Gemini AI, analyzing spending patterns, and unlocking verified financial insights.",
+  title: "Onyxa | MSME Business Tracker",
+  description: "Onyxa business workspace for micro, small, and medium enterprises.",
 };
 
 export default function RootLayout({
